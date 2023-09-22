@@ -1,13 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/common/repositories/common_fb_storage_repo.dart';
 import 'package:whatsapp_clone/common/utils/utils.dart';
 import 'package:whatsapp_clone/constant_assets/colors.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_info.dart';
+import 'package:whatsapp_clone/models/user_model.dart';
+import 'package:whatsapp_clone/screens/mobile_screen_layout.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -21,7 +25,22 @@ final authRepositoryProvider = Provider(
 class AuthRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-  const AuthRepository({required this.auth, required this.firestore});
+
+  AuthRepository({
+    required this.auth,
+    required this.firestore,
+  });
+
+  Future<UserModel?> getCurrentUserData() async {
+    var userData =
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
+    UserModel? usr;
+    if (userData.data() != null) {
+      usr = UserModel.fromMap(userData.data()!);
+    }
+    return usr;
+  }
+
   void signInWithPhone(BuildContext context, String phoneNumber) async {
     try {
       await auth.verifyPhoneNumber(
@@ -33,9 +52,10 @@ class AuthRepository {
           throw Exception(error.message);
         },
         codeSent: (verificationId, forceResendingToken) {
-          Navigator.of(context).pushNamed(
+          Navigator.of(context).pushNamedAndRemoveUntil(
             OTPSCreen.routeName,
             arguments: verificationId,
+            (route) => false,
           );
         },
         codeAutoRetrievalTimeout:
@@ -67,6 +87,53 @@ class AuthRepository {
       showSnackBar(
         context: context,
         content: e.message!,
+        bgColor: tabColor,
+        textColor: blackThemeColor,
+      );
+    }
+  }
+
+  // Ref is needed to call another provider
+  void saveUserDataToFirestore({
+    required BuildContext context,
+    required ProviderRef ref,
+    required String name,
+    required File? profilePic,
+  }) async {
+    try {
+      // We come here only if
+      String uid = auth.currentUser!.uid;
+      // ignore: unused_local_variable
+      String photoUrl =
+          'https://drive.google.com/file/d/1Zf7-yzpRc2fMgppXEfhNhe82PEwFsmrc/view?usp=sharing';
+      if (profilePic != null) {
+        photoUrl = await ref.read(commonFBSRepoProvider).storeFileToFirebase(
+              'profilePic/$uid',
+              profilePic,
+            );
+        // Filename is UID
+        var user = UserModel(
+          name: name,
+          uid: uid,
+          profilePic: photoUrl,
+          isOnline: true,
+          phoneNumber: auth.currentUser!.phoneNumber!,
+          groupId: [],
+        );
+        await firestore.collection('users').doc(uid).set(user.toMap());
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MobileScreenLayout(),
+          ),
+          (route) => false,
+        );
+      }
+    } catch (e) {
+      showSnackBar(
+        context: context,
+        content: e.toString(),
         bgColor: tabColor,
         textColor: blackThemeColor,
       );

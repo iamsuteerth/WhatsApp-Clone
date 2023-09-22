@@ -14,6 +14,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  var isLoading = false;
   final phoneController = TextEditingController();
   @override
   void dispose() {
@@ -36,6 +37,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
     if (country != null && phoneNumber.isNotEmpty && phoneNumber.length == 10) {
+      setState(() {
+        isLoading = true;
+      });
       ref.read(authControllerProvider).signInWithPhone(
             context,
             '+${country!.phoneCode}$phoneNumber',
@@ -63,7 +67,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
-        title: const Text('Enter your phone number'),
+        title: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Text('Enter your phone number'),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
@@ -126,6 +133,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               width: 90,
               child: CustomButton(
                 text: 'NEXT',
+                loading: isLoading,
                 onPressedFunction: sendPhoneNumber,
               ),
             ),

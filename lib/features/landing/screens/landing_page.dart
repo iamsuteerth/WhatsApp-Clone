@@ -50,6 +50,7 @@ class LandingPageScreen extends StatelessWidget {
               width: screenSize.width * 0.75,
               child: CustomButton(
                 text: 'AGREE AND CONTINUE',
+                loading: false,
                 onPressedFunction: () => navigateToLoginScreen(context),
               ),
             ),

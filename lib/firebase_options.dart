@@ -50,7 +50,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR_API_KEY',
+    apiKey: 'AIzaSyAlEQu-7tpIXY9CjadMbe4QrGVa8zJQJb0',
     appId: '1:1041751914549:android:9cd965f1c61a923bad597c',
     messagingSenderId: '1041751914549',
     projectId: 'whatsapp-clone-68cea',
@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'YOUR_API_KEY',
+    apiKey: 'AIzaSyCK0LgNQthq5YozPelmFdv8hDbWoIZGbfw',
     appId: '1:1041751914549:ios:0b14d61277e0be40ad597c',
     messagingSenderId: '1041751914549',
     projectId: 'whatsapp-clone-68cea',
