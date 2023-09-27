@@ -52,4 +52,8 @@ class AuthController {
       profilePic: profilePic,
     );
   }
+
+  Stream<UserModel> userDataById(String uid) {
+    return authRepository.userDataById(uid);
+  }
 }

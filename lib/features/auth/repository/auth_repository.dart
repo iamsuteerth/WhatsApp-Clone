@@ -139,4 +139,12 @@ class AuthRepository {
       );
     }
   }
+
+  Stream<UserModel> userDataById(String uid) {
+    // We have to snapshot of user data
+    // We are mapping through it and make the event be converted into userModel
+    return firestore.collection('users').doc(uid).snapshots().map(
+          (event) => UserModel.fromMap(event.data()!),
+        );
+  }
 }

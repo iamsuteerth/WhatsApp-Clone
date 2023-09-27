@@ -72,73 +72,82 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           child: Text('Enter your phone number'),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            const Center(
-              child: Text(
-                'WhatsApp will need to verify your phone number.',
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            TextButton(
-              onPressed: () {
-                showCountryPicker(
-                  context: context,
-                  showPhoneCode:
-                      true, // optional. Shows phone code before the country name.
-                  onSelect: (Country ctry) {
-                    setState(() {
-                      country = ctry;
-                    });
-                  },
-                );
-              },
-              child: const Text(
-                'pick country',
-              ),
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Row(
-              children: [
-                Text(
-                  country == null ? '' : '+${country!.phoneCode.toString()}',
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                SizedBox(
-                  width: screenSize.width * 0.75,
-                  child: TextField(
-                    controller: phoneController,
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      labelText: 'phone number',
+      body: SizedBox(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: SizedBox(
+              height: screenSize.height * 0.85,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Center(
+                    child: Text(
+                      'WhatsApp will need to verify your phone number.',
                     ),
                   ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            SizedBox(
-              width: 90,
-              child: CustomButton(
-                text: 'NEXT',
-                loading: isLoading,
-                onPressedFunction: sendPhoneNumber,
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      showCountryPicker(
+                        context: context,
+                        showPhoneCode:
+                            true, // optional. Shows phone code before the country name.
+                        onSelect: (Country ctry) {
+                          setState(() {
+                            country = ctry;
+                          });
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'pick country',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        country == null
+                            ? ''
+                            : '+${country!.phoneCode.toString()}',
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      SizedBox(
+                        width: screenSize.width * 0.75,
+                        child: TextField(
+                          controller: phoneController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'phone number',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    width: 90,
+                    child: CustomButton(
+                      text: 'NEXT',
+                      loading: isLoading,
+                      onPressedFunction: sendPhoneNumber,
+                    ),
+                  ),
+                  SizedBox(height: screenSize.height / 24),
+                ],
               ),
             ),
-            SizedBox(height: screenSize.height / 24),
-          ],
+          ),
         ),
       ),
     );

@@ -11,21 +11,17 @@ class MyMessage extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Align(
       alignment: Alignment.centerRight,
       child: ConstrainedBox(
-        constraints:
-            BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 45),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width - 45,
+        ),
         child: Card(
           elevation: 1,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           color: messageColor,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 5,
-          ),
+          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
           child: Stack(
             children: [
               Padding(
@@ -37,7 +33,9 @@ class MyMessage extends StatelessWidget {
                 ),
                 child: Text(
                   message,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
               ),
               Positioned(
@@ -62,7 +60,7 @@ class MyMessage extends StatelessWidget {
                     ),
                   ],
                 ),
-              ), // Widget to position child of a stack
+              ),
             ],
           ),
         ),

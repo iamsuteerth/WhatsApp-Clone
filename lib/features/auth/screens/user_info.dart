@@ -41,6 +41,9 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
           bgColor: tabColor,
           textColor: blackThemeColor,
         );
+        setState(() {
+          isLoading = false;
+        });
         return;
       }
       ref.read(authControllerProvider).saveUserDataToFirebase(
