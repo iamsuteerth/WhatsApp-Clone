@@ -144,7 +144,15 @@ class AuthRepository {
     // We have to snapshot of user data
     // We are mapping through it and make the event be converted into userModel
     return firestore.collection('users').doc(uid).snapshots().map(
-          (event) => UserModel.fromMap(event.data()!),
+          (event) => UserModel.fromMap(
+            event.data()!,
+          ),
         );
+  }
+
+  void setUserState(bool isOnline) async {
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline,
+    });
   }
 }

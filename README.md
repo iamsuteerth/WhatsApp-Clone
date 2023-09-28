@@ -19,6 +19,12 @@
 | 26-09-2023 | 35               | Added selectContact() method, onTap() functionality to the contact list, singeChildScroolView on login screen.                                                                                                | 1           |
 | 26-09-2023 | 38               | Did some real phone testing, added navigator argument functionality, updated router.dart and added dynamic name generation from contact list                                                                  | 2           |
 | 27-09-2023 | 83               | Added online/offline status using streambuilder, modified chat text field on chat screen, created BottomChatField stateful widget and debugged app. <Note> Name broken if chat accessed from main chat screen | 1           |
+| 27-09-2023 | 112              | Message sending feature added from backend side along with last seen functionality.                                                                                                                           | 2           |
+| 28-09-2023 | 78               | Tediously long process of using stream builders for chat screen and contact page. Not Debugged properly                                                                                                       | 1           |
+| 28-09-2023 | 81               | Debugged everything (issue was that contactId was being passed phoneNumber) and got the app working with real time chatting functionality                                                                     | 2           |
+| 28-09-2023 | 23               | Added online/offline status using WidgetsBindingObserver. Added cases for didChangeAppLifecycleState, added initState and dispose in MobileScreenLayout.                                                      | 3           |
+
+<br>
 
 > Features folder will contain features like auth, call, chat, group, contact selecting, status etc.
 
@@ -113,8 +119,72 @@ It is important for the contacts saved to have the country code.
 I will add some functionality here asking the user if they want to proceed with default country code but that will come later. Until then, add the country code in contact list.
 
 ## On Off Status
-We will need to setup a stream for this feature to work which we do so in a function in Auth Repo.
+I will need to setup a stream for this feature to work which I do so in a function in Auth Repo.
 
 ref.read() is usually used when we need to call a method
 
-We converted the bottom chat textfield to a stateful separate widget because a LOT of things will happen there which will require state to get changed and updating the entire chat screen doesn't make sense for that.
+I converted the bottom chat textfield to a stateful separate widget because a LOT of things will happen there which will require state to get changed and updating the entire chat screen doesn't make sense for that.
+
+## Sending Messages
+users -> sender_id -> receiver_id -> messages -> message_id -> message stored
+
+Use stream builder to display LAST sent message on chat screen
+
+This will be stored in contact chat sub collection
+
+users -> receiver uid -> chats ->current user id -> set data for the receiver (in chat list)
+
+users -> current uid -> chats -> receiver user id -> set data for the sender (in chat list)
+
+Refer to message_enum.dart for info on enhanced enums and extensions
+
+Refer to chat_repository for linking both the streams of sender and user
+
+Now what is happening is that as we send textMessages from either end, the lastMessage get's updated.
+
+## On contact screen
+I created a function in the chat repo which returns a stream of list type and then used this stream in stream builder for the mobile chat screen widget.
+
+Testing the live chat functionality took a lot of time to debug as there were small errors which were not easily visible
+
+## How to add auto scrolling?
+1. Create a ScrollController
+
+2. Use this snippet in the build function
+
+```dart
+SchedulerBinding.instance.addPostFrameCallback((_) {
+            messageController
+                .jumpTo(messageController.position.maxScrollExtent);
+          });
+```
+
+3. Attach the controller
+
+## Online Offline status
+I will decide this if user opens app and reaches home screen or not. For which I will be using WidgetsBindingObserver using with keyword on stateful widget
+
+This method is implemented
+```dart
+void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+  }
+```
+Where cases have to be defined and each case has its method
+
+auth repository needs to get a function to UPDATE
+
+This is how to initialize it
+```dart
+@override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+}
+
+@override
+void dispose() {
+  super.dispose();
+  WidgetsBinding.instance.removeObserver(this);
+}
+```

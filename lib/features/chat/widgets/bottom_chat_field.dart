@@ -1,17 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/features/chat/controller/chat_controller.dart';
 
-class BottomChatField extends StatefulWidget {
+class BottomChatField extends ConsumerStatefulWidget {
+  final String receiverUserId;
   const BottomChatField({
     super.key,
+    required this.receiverUserId,
   });
 
   @override
-  State<BottomChatField> createState() => _BottomChatFieldState();
+  ConsumerState<BottomChatField> createState() => _BottomChatFieldState();
 }
 
-class _BottomChatFieldState extends State<BottomChatField> {
+class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   bool isShowSendButton = false;
+  final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _messageController.dispose();
+  }
+
+  void sendTextMessage() async {
+    if (isShowSendButton) {
+      ref.read(chatControllerProvider).sendTextMessage(
+            context,
+            _messageController.text.trim(),
+            widget.receiverUserId,
+          );
+      setState(() {
+        _messageController.text = '';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +43,7 @@ class _BottomChatFieldState extends State<BottomChatField> {
       children: [
         Expanded(
           child: TextFormField(
+            controller: _messageController,
             onChanged: (value) {
               if (value.isNotEmpty) {
                 setState(() {
@@ -37,18 +62,24 @@ class _BottomChatFieldState extends State<BottomChatField> {
                 width: 100,
                 child: Row(
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.emoji_emotions,
-                        color: Colors.grey,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const Icon(
+                          Icons.emoji_emotions,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.gif,
-                        color: Colors.grey,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: const Icon(
+                          Icons.gif,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
                   ],
@@ -59,16 +90,16 @@ class _BottomChatFieldState extends State<BottomChatField> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
                         Icons.camera_alt_rounded,
                         color: Colors.grey,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Icon(
                         Icons.attach_file,
                         color: Colors.grey,
                       ),
@@ -93,9 +124,12 @@ class _BottomChatFieldState extends State<BottomChatField> {
           child: CircleAvatar(
             backgroundColor: const Color(0xFF128C7E),
             radius: 25,
-            child: Icon(
-              isShowSendButton ? Icons.send : Icons.mic,
-              color: Colors.white,
+            child: GestureDetector(
+              onTap: sendTextMessage,
+              child: Icon(
+                isShowSendButton ? Icons.send : Icons.mic,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
