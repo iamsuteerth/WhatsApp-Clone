@@ -5,24 +5,53 @@
 
 ## Project Time STAMP LOG
 
-| Day        | Total Time (Min) | Comments                                                                                                                                                                                                      | Session No. |
-|------------|------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
-| 18-09-2023 | 83               | Made the basic UI and setup the base design. Can be found in ui_build branch.                                                                                                                                 | 1           |
-| 19-09-2023 | 62               | Setup FireBase, Created Landing Screen and designed CustomButton and ErrorScreen (Basic Scaffold)                                                                                                             | 1           |
-| 20-09-2023 | 82               | Create Login Screen with Country Picker and setup Named Routes in main.dart and create a router by the name router.dart                                                                                       | 1           |
-| 20-09-2023 | 36               | Created AuthRepository(Phone Login), OTP Screen foundation led up, Updated router.dart for OTPScreen to get verificationId as argument. Created utils.dart with Snackbar                                      | 2           |
-| 20-09-2023 | 38               | Configured AuthController Provider and AuthRepositoryProvider and modified main.dart. Setup Business login in sendPhoneNumber() using ref.read()                                                              | 3           |
-| 20-09-2023 | 85               | Added SHA - 1 fingerprint on firebase console. Created OTP Screen and added OTP business logic and verification WORKS! Added route, modified auth repo and controller.                                        | 4           |
-| 21-09-2023 | 105              | Added ImagePicker, Created FBSRepo, wrote a method in AuthRepo, setup firestore methods, created UserModel and UserInfoScreen and created sendingToDB methods.                                                | 1           |
-| 22-09-2023 | 168              | Added persistent auth, created github content, added loaders, debugged app, started working on contacts.                                                                                                      | 1           |
-| 23-09-2023 | 82               | Added contacts screen, binded and added route, created provider and controller for selecting contacts.                                                                                                        | 1           |
-| 26-09-2023 | 35               | Added selectContact() method, onTap() functionality to the contact list, singeChildScroolView on login screen.                                                                                                | 1           |
-| 26-09-2023 | 38               | Did some real phone testing, added navigator argument functionality, updated router.dart and added dynamic name generation from contact list                                                                  | 2           |
-| 27-09-2023 | 83               | Added online/offline status using streambuilder, modified chat text field on chat screen, created BottomChatField stateful widget and debugged app. <Note> Name broken if chat accessed from main chat screen | 1           |
-| 27-09-2023 | 112              | Message sending feature added from backend side along with last seen functionality.                                                                                                                           | 2           |
-| 28-09-2023 | 78               | Tediously long process of using stream builders for chat screen and contact page. Not Debugged properly                                                                                                       | 1           |
-| 28-09-2023 | 81               | Debugged everything (issue was that contactId was being passed phoneNumber) and got the app working with real time chatting functionality                                                                     | 2           |
-| 28-09-2023 | 23               | Added online/offline status using WidgetsBindingObserver. Added cases for didChangeAppLifecycleState, added initState and dispose in MobileScreenLayout.                                                      | 3           |
+| Day        | Total Time (Min) | Comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Session No. |
+|------------|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|
+| 18-09-2023 | 83               | Made the basic UI and setup the base design. Can be found in ui_build branch.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | 1           |
+| 19-09-2023 | 62               | Setup FireBase, Created Landing Screen and designed CustomButton and ErrorScreen (Basic Scaffold)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | 1           |
+| 20-09-2023 | 82               | Create Login Screen with Country Picker and setup Named Routes in main.dart and create a router by the name router.dart                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | 1           |
+| 20-09-2023 | 36               | Created AuthRepository(Phone Login), OTP Screen foundation led up, Updated router.dart for OTPScreen to get verificationId as argument. Created utils.dart with Snackbar                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 2           |
+| 20-09-2023 | 38               | Configured AuthController Provider and AuthRepositoryProvider and modified main.dart. Setup Business login in sendPhoneNumber() using ref.read()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | 3           |
+| 20-09-2023 | 85               | Added SHA - 1 fingerprint on firebase console. Created OTP Screen and added OTP business logic and verification WORKS! Added route, modified auth repo and controller.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 4           |
+| 21-09-2023 | 105              | Added ImagePicker, Created FBSRepo, wrote a method in AuthRepo, setup firestore methods, created UserModel and UserInfoScreen and created sendingToDB methods.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1           |
+| 22-09-2023 | 168              | Added persistent auth, created github content, added loaders, debugged app, started working on contacts.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 1           |
+| 23-09-2023 | 82               | Added contacts screen, binded and added route, created provider and controller for selecting contacts.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | 1           |
+| 26-09-2023 | 35               | Added selectContact() method, onTap() functionality to the contact list, singeChildScroolView on login screen.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | 1           |
+| 26-09-2023 | 38               | Did some real phone testing, added navigator argument functionality, updated router.dart and added dynamic name generation from contact list                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | 2           |
+| 27-09-2023 | 83               | Added online/offline status using streambuilder, modified chat text field on chat screen, created BottomChatField stateful widget and debugged app. <Note> Name broken if chat accessed from main chat screen                                                                                                                                                                                                                                                                                                                                                                                                                                                          | 1           |
+| 27-09-2023 | 112              | Message sending feature added from backend side along with last seen functionality.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | 2           |
+| 28-09-2023 | 78               | Tediously long process of using stream builders for chat screen and contact page. Not Debugged properly                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | 1           |
+| 28-09-2023 | 81               | Debugged everything (issue was that contactId was being passed phoneNumber) and got the app working with real time chatting functionality                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | 2           |
+| 28-09-2023 | 23               | Added online/offline status using WidgetsBindingObserver. Added cases for didChangeAppLifecycleState, added initState and dispose in MobileScreenLayout.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 3           |
+| 01-10-2023 | 81               | Added sendFileMessage() in chat repo/controller, linked camera icon with the function in bottom chat field, modified message cards for sender and receiver, created a separate widget, adjusted myMessage card.                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 1           |
+| 02-10-2023 | 174              | Added Video Player Widget, converted display message acc to type if else block to switch, added pickVideoGallery global utils function, added emoji keyboard and binded functions to bottom chat field widget, added FocusNode to keep track of keyboards, added GIF SDK version from GIPHY using enough_giphy_flutter, added function in bottom_chat_field and chat repository, formatted input in chat controller for handling gifs, changed dependency in pubspec.yaml for flutter_sound and uuid compatibility, added permission_handler, created dispose for futterSoundRecorder, added logic in sendTextMessage() to handle audio and added openAudio() function | 2           |
+
+## Working Set of dependencies
+```yaml
+environment:
+  sdk: '>=3.1.2 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  firebase_core: ^2.16.0
+  firebase_auth: ^4.10.0
+  cloud_firestore: ^4.9.2
+  firebase_storage: ^11.2.7
+  country_picker: ^2.0.21
+  flutter_riverpod: ^2.4.0
+  image_picker: ^1.0.4
+  flutter_contacts: ^1.1.7+1
+  uuid: ^3.0.1
+  intl: ^0.18.1
+  cached_network_image: ^3.3.0
+  cached_video_player: ^2.0.4
+  emoji_picker_flutter: ^1.6.1
+  enough_giphy_flutter: ^0.4.1
+  flutter_sound: ^9.2.13
+  permission_handler: ^9.2.0
+  path_provider: ^2.1.1
+```
 
 <br>
 
@@ -188,3 +217,62 @@ void dispose() {
   WidgetsBinding.instance.removeObserver(this);
 }
 ```
+## Sending Files (Images and all)
+Create a function for the same in chat repository
+
+Added cached_network_image and cached_video_player dependency to cache the network images and videos so they don't download every time user opens the page.
+
+Functions are created accordingly.
+
+### Video Player Widget
+This file has the cached video player widget present along with ability to play and pause the video. A controller is also present for the same.
+
+### Display Msg Acc to Type
+Stands for `Display message according to type` and has a switch case block similar to router file to return the correct widget corresponding to the message enum type.
+
+## Bottom Chat Field Emoji
+I'm using emoji_picker dependency for this. And there are 2 class of functions with show/hide options for each keyboard and emoji keyboard.
+
+FocusNode keeps track of whether or not we need to show the keyboard or not
+
+## GIFs
+> Create a developer account on GIPHY
+
+> Register an app for the key
+
+Now the general trend of this project is to store the file in storage and retrieve it's url from firebase firestore.
+
+I created a separate sendGIF function similar to sendFileMessage in chat repo for additional functionality followed by standard controller procedure followed by creating the function in intended widget.
+
+#### Note : Input formatting in controller widgets
+```
+https://giphy.com/gifs/hoppip-art-television-ukyykyDcWZbIQ
+should be formatted as
+https://i.giphy.com/media/ukyykyDcWZbIQ/200.gif
+```
+In code, it can be done like this but there are other options too.
+```dart
+String temp = '';
+  var i = gifUrl.length - 1;
+  while (gifUrl[i] != '-') {
+    temp = temp + gifUrl[i];
+    i--;
+  }
+  temp = String.fromCharCodes(temp.codeUnits.reversed);
+  String actualUrl = 'https://i.giphy.com/media/$temp/200.gif';
+```
+
+## Audio
+IOS needs plist update with `NSAppleMusicUsageDescription`
+
+Also for flutter_sound to work uuid 3.0.1 is needed
+
+And for permission_handler to work with `agura` (which I'll use later), version 9.2.0 is needed.
+
+Need to setup inside pod_installer for IOS
+
+Added path_provider
+
+A lot of setup had to be done for the audio file message type which can be found in the `bottom_chat_field.dart` file.
+
+Using a StatefulBuilder to get stateful widget capability in Display_Msg... which is a StatelessWidget.
