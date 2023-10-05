@@ -3,6 +3,12 @@
 ### As I am building the app, as per progress, snapshots of different app development stages are present in appropriately named branches.
 ### A Project TimeStamp Log will be present throughout and can be used to give you a jist of what I did and WHEN I did
 
+# Development Errors
+- When you are replying to a big message or something like that, render overflow error when keyboard brought up
+
+- Alignment of sender user text
+
+- Status can be too slow to load sometimes
 ## Project Time STAMP LOG
 
 | Day        | Total Time (Min) | Comments                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | Session No. |
@@ -25,6 +31,10 @@
 | 28-09-2023 | 23               | Added online/offline status using WidgetsBindingObserver. Added cases for didChangeAppLifecycleState, added initState and dispose in MobileScreenLayout.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | 3           |
 | 01-10-2023 | 81               | Added sendFileMessage() in chat repo/controller, linked camera icon with the function in bottom chat field, modified message cards for sender and receiver, created a separate widget, adjusted myMessage card.                                                                                                                                                                                                                                                                                                                                                                                                                                                        | 1           |
 | 02-10-2023 | 174              | Added Video Player Widget, converted display message acc to type if else block to switch, added pickVideoGallery global utils function, added emoji keyboard and binded functions to bottom chat field widget, added FocusNode to keep track of keyboards, added GIF SDK version from GIPHY using enough_giphy_flutter, added function in bottom_chat_field and chat repository, formatted input in chat controller for handling gifs, changed dependency in pubspec.yaml for flutter_sound and uuid compatibility, added permission_handler, created dispose for futterSoundRecorder, added logic in sendTextMessage() to handle audio and added openAudio() function | 2           |
+| 04-10-2023 | 54               | Added a global common provider messageReplyProvider, created message_reply_preview widget, modified myMessafe, modified chat repo functions for messageReply, modified Message class for messageReply, modified chat_list for messageReply, modified bottom chat field widget slightly to accomodate reply feature                                                                                                                                                                                                                                                                                                                                                     | 1           |
+| 04-10-2023 | 83               | Finished reply feature (Changed Firestore structure a bit after debugging), added Seen feature and debugged the app.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 2           |
+| 05-10-2023 | 63               | Created statusRepository, status class, tabBarView for status, updated router.dart, created confirmStatusScreen, created statusContactScreen and started work on repository                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 1           |
+| 05-10-2023 | 73               | Finished uploadStatus function in statusRepo, created controller for statusRepo and binded functions, finished confirmStatusScreen and finished first part of statuses, debug issue was in model part where JSON serialization was done incorrectly (human error), built index on firebase, finished status contact screen, finished getStatus() in status repo, added statusScreen, added StoryView and finished Status feature.                                                                                                                                                                                                                                      | 2           |
 
 ## Working Set of dependencies
 ```yaml
@@ -276,3 +286,65 @@ Added path_provider
 A lot of setup had to be done for the audio file message type which can be found in the `bottom_chat_field.dart` file.
 
 Using a StatefulBuilder to get stateful widget capability in Display_Msg... which is a StatelessWidget.
+
+## Replying to Messages
+`message_reply_provider` will help to reply to messages and will contain the reply to any message you want.
+
+A state provider is used instead of a normal provider because the state of the provider can be updated whenever the provider is used.
+
+It can be null (the initial state). The message reply will get updated when we reply to a message (as we slide it)
+
+A message reply preview widget is created as some dialogue box of some sort needs to be brought up on top of the bottom chat field in case a message is being replied to.
+
+The preview bar will have be a container with the message and a desc. of who the user is replying to.
+
+swipe_to is used to detect the swipes required for replying to messages.
+
+We are reading the value from messageReplyProvider (with every swipe we update it) and then we are passing the fresh values.
+
+New functions were not created, existing ones were replied to handle the replied functionality.
+
+`...` cascade operator allows us to pass multiple widgets in cases like this
+```dart
+if (isReplying) ...[
+  Text(
+    userName,
+    style: const TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+  const SizedBox(
+    height: 3,
+  ),
+  Container(
+    padding: const EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: backgroundColor.withOpacity(0.4),
+      borderRadius: BorderRadius.circular(7),
+    ),
+    child: DisplayMessageAccordingToType(
+      message: repliedText,
+      type: repliedMessageType,
+    ),
+  ),
+  const SizedBox(
+    height: 8,
+  ),
+],
+```
+
+## Seen Feature
+If the receiver id is current id, then seen message should be hit.
+
+A simple update function does this for us.
+
+In chat list, if the message is not seen and receiver id is auth instance user id, then setChatMessage to seen (this will only work for new messages which are not seen)
+
+## Status feature
+First step is to add a tabBarView with children as the tabs and a controller for the same
+
+Add a tickerProvider in the mix in while creating the class as `with ...`
+
+Refer to comments in status repostiory for detailed explanation.
+
+story_view is used to get that story like UI.

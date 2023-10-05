@@ -1,9 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:whatsapp_clone/common/utils/utils.dart';
+import 'package:whatsapp_clone/common/widgets/error.dart';
 import 'package:whatsapp_clone/constant_assets/colors.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:whatsapp_clone/features/chat/widgets/contact_list.dart';
+import 'package:whatsapp_clone/features/status/screens/confirm_status_screen.dart';
+import 'package:whatsapp_clone/features/status/screens/status_contacts_screen.dart';
 
 class MobileScreenLayout extends ConsumerStatefulWidget {
   const MobileScreenLayout({super.key});
@@ -13,7 +20,9 @@ class MobileScreenLayout extends ConsumerStatefulWidget {
 }
 
 class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, TickerProviderStateMixin {
+  late TabController tabController;
+
   @override
   // This allows us to know which state app is
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -40,6 +49,7 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addObserver(this);
     // I have added this because when you close the app, it re runs, its not "resumed". This When this state is initialized, it will set status to true
     ref.read(authControllerProvider).setUserState(true);
@@ -85,15 +95,16 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
                 ),
               ),
             ],
-            bottom: const TabBar(
+            bottom: TabBar(
+              controller: tabController,
               indicatorColor: tabColor,
               indicatorWeight: 4,
               labelColor: tabColor,
               unselectedLabelColor: Colors.grey,
-              labelStyle: TextStyle(
+              labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),
-              tabs: [
+              tabs: const [
                 Tab(
                   text: 'CHATS',
                 ),
@@ -106,10 +117,36 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
               ],
             ),
           ),
-          body: const ContactsList(),
+          body: TabBarView(
+            controller: tabController,
+            children: const [
+              ContactsList(),
+              StatusContactsScreen(),
+              Text('calls'),
+            ],
+          ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(SelectContactsScreen.routeName);
+            onPressed: () async {
+              switch (tabController.index) {
+                case 0:
+                  Navigator.of(context)
+                      .pushNamed(SelectContactsScreen.routeName);
+                  break;
+                case 1:
+                  File? pickedImage = await pickImageGallery(context);
+                  if (pickedImage != null) {
+                    Navigator.of(context).pushNamed(
+                        ConfirmStatusScreen.routeName,
+                        arguments: pickedImage);
+                  }
+                  break;
+                default:
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ErrorWidgetCustom(),
+                    ),
+                  );
+              }
             },
             backgroundColor: tabColor,
             child: const Icon(

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/enums/message_enum.dart';
+import 'package:whatsapp_clone/common/providers/message_reply_provider.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/features/chat/repositories/chat_repository.dart';
 import 'package:whatsapp_clone/models/chat_contact.dart';
@@ -38,6 +39,7 @@ class ChatController {
     String text,
     String receiverUid,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
       (senderUser) {
         chatRepository.sendTextMessage(
@@ -45,9 +47,11 @@ class ChatController {
           text: text,
           receiverUid: receiverUid,
           senderUser: senderUser!,
+          repliedMessage: messageReply,
         );
       },
     );
+    ref.read(messageReplyProvider.notifier).update((state) => null);
   }
 
   void sendFileMessage(
@@ -56,6 +60,7 @@ class ChatController {
     String receiverUserid,
     MessageEnum fileType,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
       (senderUser) {
         chatRepository.sendFileMessage(
@@ -65,6 +70,7 @@ class ChatController {
           senderUserData: senderUser!,
           ref: ref,
           fileType: fileType,
+          repliedMessage: messageReply,
         );
       },
     );
@@ -75,6 +81,7 @@ class ChatController {
     String gifUrl,
     String receiverUserid,
   ) {
+    final messageReply = ref.read(messageReplyProvider);
     // https://giphy.com/gifs/hoppip-art-television-ukyykyDcWZbIQ
     // should be formatted as
     // https://i.giphy.com/media/ukyykyDcWZbIQ/200.gif
@@ -94,8 +101,21 @@ class ChatController {
           gifUrl: actualUrl,
           receiverUserid: receiverUserid,
           senderUserData: senderUser!,
+          messageReply: messageReply,
         );
       },
+    );
+  }
+
+  void setChatMessageSeen(
+    BuildContext context,
+    String recieverUserId,
+    String messageId,
+  ) {
+    chatRepository.setChatMessageSeen(
+      context,
+      recieverUserId,
+      messageId,
     );
   }
 }
