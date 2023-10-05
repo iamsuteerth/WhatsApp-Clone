@@ -61,6 +61,9 @@ dependencies:
   flutter_sound: ^9.2.13
   permission_handler: ^9.2.0
   path_provider: ^2.1.1
+  audioplayers: ^5.1.0
+  swipe_to: ^1.0.2
+  story_view: ^0.15.0
 ```
 
 <br>
