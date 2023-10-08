@@ -17,9 +17,11 @@ import 'package:whatsapp_clone/features/chat/widgets/message_reply_preview.dart'
 
 class BottomChatField extends ConsumerStatefulWidget {
   final String receiverUserId;
+  final bool isGroupChat;
   const BottomChatField({
     super.key,
     required this.receiverUserId,
+    required this.isGroupChat,
   });
 
   @override
@@ -85,10 +87,10 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
   void sendTextMessage() async {
     if (isShowSendButton) {
       ref.read(chatControllerProvider).sendTextMessage(
-            context,
-            _messageController.text.trim(),
-            widget.receiverUserId,
-          );
+          context,
+          _messageController.text.trim(),
+          widget.receiverUserId,
+          widget.isGroupChat);
       setState(() {
         _messageController.text = '';
       });
@@ -121,9 +123,13 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     File file,
     MessageEnum fileType,
   ) {
-    ref
-        .read(chatControllerProvider)
-        .sendFileMessage(context, file, widget.receiverUserId, fileType);
+    ref.read(chatControllerProvider).sendFileMessage(
+          context,
+          file,
+          widget.receiverUserId,
+          fileType,
+          widget.isGroupChat,
+        );
   }
 
   // Select Functions
@@ -145,10 +151,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     final gif = await pickGif(context);
     if (gif != null) {
       ref.read(chatControllerProvider).sendGIFMessage(
-            context,
-            gif.url,
-            widget.receiverUserId,
-          );
+          context, gif.url, widget.receiverUserId, widget.isGroupChat);
     }
   }
 

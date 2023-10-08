@@ -6,6 +6,7 @@ import 'package:whatsapp_clone/common/providers/message_reply_provider.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/features/chat/repositories/chat_repository.dart';
 import 'package:whatsapp_clone/models/chat_contact.dart';
+import 'package:whatsapp_clone/models/group.dart';
 import 'package:whatsapp_clone/models/message.dart';
 
 final chatControllerProvider = Provider(
@@ -30,14 +31,23 @@ class ChatController {
     return chatRepository.getChatContacts();
   }
 
+  Stream<List<Group>> chatGroups() {
+    return chatRepository.getChatGroups();
+  }
+
   Stream<List<Message>> chatMessages(String receiverUserId) {
     return chatRepository.getChatMessages(receiverUserId);
+  }
+
+  Stream<List<Message>> groupMessages(String grpupId) {
+    return chatRepository.getGropChatMessages(grpupId);
   }
 
   void sendTextMessage(
     BuildContext context,
     String text,
     String receiverUid,
+    bool isGroupChat,
   ) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
@@ -48,6 +58,7 @@ class ChatController {
           receiverUid: receiverUid,
           senderUser: senderUser!,
           repliedMessage: messageReply,
+          isGroupChat: isGroupChat,
         );
       },
     );
@@ -59,6 +70,7 @@ class ChatController {
     File file,
     String receiverUserid,
     MessageEnum fileType,
+    bool isGroupChat,
   ) {
     final messageReply = ref.read(messageReplyProvider);
     ref.read(userDataAuthProvider).whenData(
@@ -71,6 +83,7 @@ class ChatController {
           ref: ref,
           fileType: fileType,
           repliedMessage: messageReply,
+          isGroupChat: isGroupChat,
         );
       },
     );
@@ -80,6 +93,7 @@ class ChatController {
     BuildContext context,
     String gifUrl,
     String receiverUserid,
+    bool isGroupChat,
   ) {
     final messageReply = ref.read(messageReplyProvider);
     // https://giphy.com/gifs/hoppip-art-television-ukyykyDcWZbIQ
@@ -102,6 +116,7 @@ class ChatController {
           receiverUserid: receiverUserid,
           senderUserData: senderUser!,
           messageReply: messageReply,
+          isGroupChat: isGroupChat,
         );
       },
     );

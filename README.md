@@ -35,6 +35,8 @@
 | 04-10-2023 | 83               | Finished reply feature (Changed Firestore structure a bit after debugging), added Seen feature and debugged the app.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | 2           |
 | 05-10-2023 | 63               | Created statusRepository, status class, tabBarView for status, updated router.dart, created confirmStatusScreen, created statusContactScreen and started work on repository                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | 1           |
 | 05-10-2023 | 73               | Finished uploadStatus function in statusRepo, created controller for statusRepo and binded functions, finished confirmStatusScreen and finished first part of statuses, debug issue was in model part where JSON serialization was done incorrectly (human error), built index on firebase, finished status contact screen, finished getStatus() in status repo, added statusScreen, added StoryView and finished Status feature.                                                                                                                                                                                                                                      | 2           |
+| 07-10-2023 | 117              | Added createGroupScreen and selectContact widget for the same, created a state notifier for selected contact which can be updated and read globally, created a group model, created group repo, created create Group function, added new logic for selectContact, finished backend work.                                                                                                                                                                                                                                                                                                                                                                               | 1           |
+| 08-10-2023 | 123              | Added a stream builder for displaying groups, added functions for the same in chat repo, added isGroupChat check and modified dependencies (files), modified chat repo to get stream of group chat messages, added a ternary expression determining provider for stream of messages based on isGroupChat in chat list, a LOT of modifications to accomodate sending messages to chat repo (all sub functions modified as well), controller functions modified for isGroupChat functionality and debugged the app.                                                                                                                                                      | 1           |
 
 ## Working Set of dependencies
 ```yaml
@@ -351,3 +353,48 @@ Add a tickerProvider in the mix in while creating the class as `with ...`
 Refer to comments in status repostiory for detailed explanation.
 
 story_view is used to get that story like UI.
+
+## Create Groups
+When using a popupmenu item, it uses pop() to dismiss the pop up box, so it is important to wrap the widget with a future
+
+Not much explanation is there as a lot of code is re used and logic is re implemented
+
+createGroup in the group repo
+
+select Contact reused from the provider
+
+How to efficiently handle selecting contacts and updating state accordingly
+
+```dart
+void selectContact(Contact contact, String phoneNumber) {
+  if (selectedContactsIndex.contains(phoneNumber)) {
+    selectedContactsIndex.removeWhere((element) => element == phoneNumber);
+    setState(() {
+      ref.read(selectedGroupContact.notifier).update((state) {
+        state.removeWhere((element) => element == contact);
+        state = [...state];
+        return state;
+      });
+    });
+  } else {
+    selectedContactsIndex.add(phoneNumber);
+    setState(() {
+      ref.read(selectedGroupContact.notifier).update((state) {
+        state.add(contact);
+        state = [...state];
+        return state;
+      });
+    });
+  }
+}
+```
+I reuse the chat list by passing in an isGroupChat variable where I change the receiver user id as groupId when it is a group
+
+Similar changes for the group name and picture
+
+And collection change for getting the stream of messages in the chat repo
+
+A lot of changes made for sending messages in groups in bottom chat field and chat repo and controller
+
+How to store messages for groups <br>
+`groups -> group id -> chat -> message`
