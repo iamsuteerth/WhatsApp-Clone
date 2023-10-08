@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 
 class Loader extends StatelessWidget {
   const Loader({super.key});

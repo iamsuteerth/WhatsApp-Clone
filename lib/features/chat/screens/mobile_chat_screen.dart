@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/widgets/loader.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/features/chat/widgets/bottom_chat_field.dart';
 import 'package:whatsapp_clone/models/user_model.dart';
@@ -49,14 +49,6 @@ class MobileChatScreen extends ConsumerWidget {
               ),
         centerTitle: false,
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.video_call),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.call),
-          ),
           IconButton(
             onPressed: () {},
             icon: const Icon(Icons.more_vert),

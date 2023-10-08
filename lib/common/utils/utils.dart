@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:enough_giphy_flutter/enough_giphy_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 
 void showSnackBar(
     {required BuildContext context,

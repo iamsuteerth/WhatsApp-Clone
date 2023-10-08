@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:whatsapp_clone/common/widgets/loader.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 import 'package:whatsapp_clone/features/chat/controller/chat_controller.dart';
 import 'package:whatsapp_clone/features/chat/screens/mobile_chat_screen.dart';
 import 'package:whatsapp_clone/models/chat_contact.dart';

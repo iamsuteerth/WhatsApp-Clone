@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/repositories/common_fb_storage_repo.dart';
 import 'package:whatsapp_clone/common/utils/utils.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 import 'package:whatsapp_clone/features/auth/screens/otp_screen.dart';
 import 'package:whatsapp_clone/features/auth/screens/user_info.dart';
 import 'package:whatsapp_clone/models/user_model.dart';

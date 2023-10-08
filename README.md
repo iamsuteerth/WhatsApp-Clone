@@ -37,6 +37,7 @@
 | 05-10-2023 | 73               | Finished uploadStatus function in statusRepo, created controller for statusRepo and binded functions, finished confirmStatusScreen and finished first part of statuses, debug issue was in model part where JSON serialization was done incorrectly (human error), built index on firebase, finished status contact screen, finished getStatus() in status repo, added statusScreen, added StoryView and finished Status feature.                                                                                                                                                                                                                                      | 2           |
 | 07-10-2023 | 117              | Added createGroupScreen and selectContact widget for the same, created a state notifier for selected contact which can be updated and read globally, created a group model, created group repo, created create Group function, added new logic for selectContact, finished backend work.                                                                                                                                                                                                                                                                                                                                                                               | 1           |
 | 08-10-2023 | 123              | Added a stream builder for displaying groups, added functions for the same in chat repo, added isGroupChat check and modified dependencies (files), modified chat repo to get stream of group chat messages, added a ternary expression determining provider for stream of messages based on isGroupChat in chat list, a LOT of modifications to accomodate sending messages to chat repo (all sub functions modified as well), controller functions modified for isGroupChat functionality and debugged the app.                                                                                                                                                      | 1           |
+| 08-10-2023 | 55               | Created callModel, installed agora_uikit, did initial setup, created folder structure for call feature, created makeCall function, modified contact_list, added makeCall in mobileChatScreen, created callPickupScreen. Because of technical difficulties and need of a deployed server which would have made the project too complicated, call feature is scrapped. The guide can be found in ms8_fin.                                                                                                                                                                                                                                                                | 2           |
 
 ## Working Set of dependencies
 ```yaml
@@ -398,3 +399,24 @@ A lot of changes made for sending messages in groups in bottom chat field and ch
 
 How to store messages for groups <br>
 `groups -> group id -> chat -> message`
+
+## Calling
+Dependencies
+```dart
+flutter pub add agora_uikit // Check dependencies section to have a WORKING SET
+1. Create agora account
+2. Create a project in Test mode
+3. Enable Primary Certificate
+4. Create a config file with token, appId and certificate
+5. Follow docs
+```
+
+Stream builders will be used a lot in this calling part
+
+In call collection with document of caller id and this has to be done for both users
+
+CallPickupScreen will have a streamBuilder which will continously listen to the sub collections with "our" uid which will show a screen to accept or reject the call
+
+The scaffold in CallPickupScreen is to control `do we need to show this`. If the stream builder doesn;t have our uid, then the widget needs to return scaffold
+
+The call part is made in `go` lang which has to be deployed, any developer wanting to implement this can use the 

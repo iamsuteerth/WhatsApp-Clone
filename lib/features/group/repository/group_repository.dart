@@ -14,9 +14,10 @@ import 'package:whatsapp_clone/models/group.dart' as model;
 
 final groupRepositoryProvider = Provider(
   (ref) => GroupRepository(
-      firestore: FirebaseFirestore.instance,
-      auth: FirebaseAuth.instance,
-      ref: ref),
+    firestore: FirebaseFirestore.instance,
+    auth: FirebaseAuth.instance,
+    ref: ref,
+  ),
 );
 
 class GroupRepository {

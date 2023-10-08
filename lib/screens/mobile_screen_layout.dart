@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:whatsapp_clone/common/utils/utils.dart';
 import 'package:whatsapp_clone/common/widgets/error.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 import 'package:whatsapp_clone/features/auth/controller/auth_controller.dart';
 import 'package:whatsapp_clone/features/group/screens/create_group_screen.dart';
 import 'package:whatsapp_clone/features/select_contacts/screens/select_contacts_screen.dart';
@@ -50,7 +50,7 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
     WidgetsBinding.instance.addObserver(this);
     // I have added this because when you close the app, it re runs, its not "resumed". This When this state is initialized, it will set status to true
     ref.read(authControllerProvider).setUserState(true);
@@ -81,13 +81,6 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
             ),
             centerTitle: false,
             actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
-              ),
               PopupMenuButton(
                 icon: const Icon(
                   Icons.more_vert,
@@ -121,9 +114,6 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
                 Tab(
                   text: 'STATUS',
                 ),
-                Tab(
-                  text: 'CALLS',
-                ),
               ],
             ),
           ),
@@ -132,7 +122,6 @@ class _MobileScreenLayoutState extends ConsumerState<MobileScreenLayout>
             children: const [
               ContactsList(),
               StatusContactsScreen(),
-              Text('calls'),
             ],
           ),
           floatingActionButton: FloatingActionButton(

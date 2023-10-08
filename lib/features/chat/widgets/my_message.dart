@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swipe_to/swipe_to.dart';
 import 'package:whatsapp_clone/common/enums/message_enum.dart';
-import 'package:whatsapp_clone/constant_assets/colors.dart';
+import 'package:whatsapp_clone/common/colors.dart';
 import 'package:whatsapp_clone/features/chat/widgets/display_msg_acc_to_type.dart';
 
 class MyMessage extends StatelessWidget {
