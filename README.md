@@ -1,6 +1,9 @@
 # WhatsApp Clone
 Hi, this project is a an attempt of replicating the famous app WhatsApp. Before diving into the features and what is covered in this project, a small explanation is given below to the project structure.
 
+- firebase_options is excluded from the project because you will have to configure firebase for YOUR project yourself
+
+
 # Key Features
 - **Firebase phone authetication preceded by landing screen**
 - **User Profile with profile pictures**
